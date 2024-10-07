@@ -1,5 +1,9 @@
 <?php
-
+/*
+https://github.com/vaamonde/pfsense/blob/main/pfsense-2.6-plus/Etapa-019-AdicionandoWidgetSpeedTest.txt
+https://fabriciovc.eti.br/instalando-o-speedtest-cli-no-pfsense/
+https://github.com/LeonStraathof/pfsense-speedtest-widget
+*/
 require_once("guiconfig.inc");
 
 if ($_REQUEST['ajax']) { 
