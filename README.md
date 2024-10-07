@@ -20,5 +20,7 @@ speedtest-cli --secure --json | jq
 
 # Instalando o Widget
 ```sh
-curl -LJ https://raw.githubusercontent.com/AlanMartines/pfsense-speedtest-widget/speedtest.widget.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
+curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 ```
+
+![image](https://github.com/user-attachments/assets/8aefa6a0-2f9c-4bd9-9bcb-b5d62169c6e0)
