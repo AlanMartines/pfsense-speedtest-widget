@@ -29,12 +29,14 @@ if ($_REQUEST['ajax']) {
         <td><h4 id="speedtest-upload">N/A</h4></td>
     </tr>
     <tr>
-        <td>ISP</td>
-        <td colspan="2" id="speedtest-isp">N/A</td>
+        <td>ISP <i class="fa fa-network-wired"></td>
+        <td>Host <i class="fa fa-server"></td>
+        <td>IP <i class="fa fa-globe"></td>
     </tr>
     <tr>
-        <td>Host</td>
-        <td colspan="2" id="speedtest-host">N/A</td>
+		<td id="speedtest-isp">N/A</td>
+        <td id="speedtest-host">N/A</td>
+        <td id="speedtest-ip">N/A</td>
     </tr>
     <tr>
         <td colspan="3" id="speedtest-ts" style="font-size: 0.8em;">&nbsp;</td>
@@ -50,7 +52,8 @@ function update_result(results) {
         $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
         $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
         $("#speedtest-isp").html(results.client.isp);
-        $("#speedtest-host").html(results.server.name + ", " + results.server.country);
+        $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
+        $("#speedtest-ip").html(results.client.ip);
     } else {
         $("#speedtest-ts").html("Speedtest failed");
         $("#speedtest-ping").html("N/A");
@@ -58,6 +61,7 @@ function update_result(results) {
         $("#speedtest-upload").html("N/A");
         $("#speedtest-isp").html("N/A");
         $("#speedtest-host").html("N/A");
+        $("#speedtest-ip").html("N/A");
     }
 }
 
