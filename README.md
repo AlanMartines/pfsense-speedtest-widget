@@ -1,1 +1,1 @@
-# Speedtest dashboard widget for pfSense
+# Speedtest dashboard widget para pfSense
