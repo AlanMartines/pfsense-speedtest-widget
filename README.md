@@ -1,2 +1,1 @@
-# pfsense-speedtest-widget
-Speedtest dashboard widget for pfSense
+# Speedtest dashboard widget for pfSense
