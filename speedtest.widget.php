@@ -34,9 +34,9 @@ if ($_REQUEST['ajax']) {
         <td>IP <i class="fa fa-globe"></td>
     </tr>
     <tr>
-		<td id="speedtest-isp">N/A</td>
+				<td id="speedtest-isp">N/A</td>
         <td id="speedtest-host">N/A</td>
-        <td id="speedtest-ip">N/A</td>
+        <td><span id="speedtest-ip">N/A</span><span id="speedtest-geoip"></span></td>
     </tr>
     <tr>
         <td colspan="3" id="speedtest-ts" style="font-size: 0.8em;">&nbsp;</td>
@@ -44,7 +44,34 @@ if ($_REQUEST['ajax']) {
 </table>
 <a id="updspeed" href="#" class="fa fa-refresh" style="display: none;"></a>
 <script type="text/javascript">
+
+function geoIP(results){
+		console.log('IP API');
+		$.ajax({
+				url: "http://ip-api.com/json/"+results.client.ip, // URL da API
+				method: "GET",
+				dataType: 'json',
+				success: function(response) {
+						// Verifica se o status é 'success'
+						if (response.status === "success") {
+								// Obtém latitude e longitude
+								var latitude = response.lat;
+								var longitude = response.lon;
+								// Exibe o resultado na página
+								$('#speedtest-geoip').html('<a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
+						} else {
+								$('#speedtest-geoip').html("");
+						}
+				},
+				error: function() {
+						// Caso ocorra um erro na requisição
+						$("#speedtest-geoip").html("");
+				}
+		});
+}
+
 function update_result(results) {
+		console.log('Speed Test');
     if(results != null) {
         var date = new Date(results.timestamp);
         $("#speedtest-ts").html(date);
@@ -54,6 +81,7 @@ function update_result(results) {
         $("#speedtest-isp").html(results.client.isp);
         $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
         $("#speedtest-ip").html(results.client.ip);
+				//geoIP(results);
     } else {
         $("#speedtest-ts").html("Speedtest failed");
         $("#speedtest-ping").html("N/A");
@@ -62,6 +90,7 @@ function update_result(results) {
         $("#speedtest-isp").html("N/A");
         $("#speedtest-host").html("N/A");
         $("#speedtest-ip").html("N/A");
+				$("#speedtest-geoip").html("");
     }
 }
 
