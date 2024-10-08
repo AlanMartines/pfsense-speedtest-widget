@@ -41,7 +41,7 @@ pkg install -y jq
 
 <h3>Exemplo de Tela do Widget</h3>
 
-<p><center><img src="https://github.com/user-attachments/assets/8aefa6a0-2f9c-4bd9-9bcb-b5d62169c6e0" alt="Speedtest Widget Screenshot"></center></p>
+<p align="center"><img src="https://github.com/user-attachments/assets/8aefa6a0-2f9c-4bd9-9bcb-b5d62169c6e0" alt="Speedtest Widget Screenshot"></p>
 
 <h2>Créditos</h2>
 
