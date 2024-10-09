@@ -6,8 +6,8 @@
 
 <ul>
   <li>pfSense</li>
-  <li><code>speedtest-cli</code></li>
-  <li><code>jq</code></li>
+  <li>speedtest-cli</li>
+  <li>jq</li>
 </ul>
 
 <h2>Instalação do <code>speedtest-cli</code></h2>
