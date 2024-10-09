@@ -1,9 +1,5 @@
 <?php
-/*
-https://github.com/vaamonde/pfsense/blob/main/pfsense-2.6-plus/Etapa-019-AdicionandoWidgetSpeedTest.txt
-https://fabriciovc.eti.br/instalando-o-speedtest-cli-no-pfsense/
-https://github.com/LeonStraathof/pfsense-speedtest-widget
-*/
+
 require_once("guiconfig.inc");
 
 if ($_REQUEST['ajax']) { 
@@ -52,17 +48,17 @@ if ($_REQUEST['ajax']) {
 function geoIP(results){
 		console.log('IP API');
 		$.ajax({
-				url: "http://ip-api.com/json/"+results.client.ip, // URL da API
+				url: "https://ipwho.is/"+results.client.ip, // URL da API
 				method: "GET",
 				dataType: 'json',
 				success: function(response) {
 						// Verifica se o status é 'success'
-						if (response.status === "success") {
+						if (response.success === true) {
 								// Obtém latitude e longitude
-								var latitude = response.lat;
-								var longitude = response.lon;
+								var latitude = response.latitude;
+								var longitude = response.longitude;
 								// Exibe o resultado na página
-								$('#speedtest-geoip').html('<a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
+								$('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
 						} else {
 								$('#speedtest-geoip').html("");
 						}
@@ -85,7 +81,7 @@ function update_result(results) {
         $("#speedtest-isp").html(results.client.isp);
         $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
         $("#speedtest-ip").html(results.client.ip);
-				//geoIP(results);
+				geoIP(results);
     } else {
         $("#speedtest-ts").html("Speedtest failed");
         $("#speedtest-ping").html("N/A");
