@@ -4,7 +4,7 @@ require_once("guiconfig.inc");
 
 if ($_REQUEST['ajax']) {
     $results = shell_exec("speedtest --secure --json");
-    if (($results !== null) && (json_decode($results) !== null)) {
+    if (!empty($results) && json_decode(trim($results), true) !== null) {
         $config['widgets']['speedtest_result'] = $results;
         write_config("Save speedtest results");
         echo $results;
@@ -13,7 +13,7 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if (($results !== null) && (json_decode($results, true) === null)) {
+    if (!empty($results) && json_decode(trim($results), true) === null) {
         $results = null;
     }
 ?>
