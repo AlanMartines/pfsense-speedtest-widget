@@ -85,7 +85,7 @@ if ($_REQUEST['ajax']) {
             console.log('Speed Test');
             if (results != null) {
                 var date = new Date(results.timestamp);
-                $("#speedtest-ts").html(date);
+                $("#speedtest-ts").html(date.toLocaleString());
                 $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
                 $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
                 $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
