@@ -13,15 +13,15 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if(($results !== null) && (!is_object(json_decode($results)))) {
+    if(($results !== null) && (json_decode($results, true) === null)) {
         $results = null;
     }
 ?>
 <table class="table">
     <tr>
-        <td><h4>Ping <i class="fa fa-exchange"></h4></td>
+        <td><h4>Ping <i class="fa fa-exchange"></i></h4></td>
         <td><h4>Download <i class="fa fa-download"></i></h4></td>
-        <td><h4>Upload <i class="fa fa-upload"></h4></td>
+        <td><h4>Upload <i class="fa fa-upload"></i></h4></td>
     </tr>
     <tr>
         <td><h4 id="speedtest-ping">N/A</h4></td>
@@ -29,9 +29,9 @@ if ($_REQUEST['ajax']) {
         <td><h4 id="speedtest-upload">N/A</h4></td>
     </tr>
     <tr>
-        <td>ISP <i class="fa fa-network-wired"></td>
-        <td>Host <i class="fa fa-server"></td>
-        <td>IP <i class="fa fa-globe"></td>
+        <td>ISP <i class="fa fa-network-wired"></i></td>
+        <td>Host <i class="fa fa-server"></i></td>
+        <td>IP <i class="fa fa-globe"></i></td>
     </tr>
     <tr>
 				<td id="speedtest-isp">N/A</td>
@@ -58,7 +58,7 @@ function geoIP(results){
 								var latitude = response.latitude;
 								var longitude = response.longitude;
 								// Exibe o resultado na página
-								$('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
+                                $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
 						} else {
 								$('#speedtest-geoip').html("");
 						}
@@ -79,7 +79,7 @@ function update_result(results) {
         $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
         $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
         $("#speedtest-isp").html(results.client.isp);
-        $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
+        $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
         $("#speedtest-ip").html(results.client.ip);
 				geoIP(results);
     } else {
@@ -127,7 +127,7 @@ events.push(function() {
         update_speedtest();
         return false;
     });
-    update_result(<?php echo ($results === null ? "null" : $results); ?>);
+    update_result(<?php echo htmlspecialchars(($results === null ? "null" : $results), ENT_QUOTES, 'UTF-8'); ?>);
 });
 </script>
 <?php } ?>
