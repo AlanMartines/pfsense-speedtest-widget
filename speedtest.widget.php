@@ -86,7 +86,7 @@ if ($_REQUEST['ajax']) {
             if (results != null) {
                 if (results.timestamp) {
                     var date = new Date(results.timestamp);
-                    $("#speedtest-ts").html(date.toLocaleString());
+                    $("#speedtest-ts").html(date);
                 } else {
                     $("#speedtest-ts").html("Data indisponível");
                 }
