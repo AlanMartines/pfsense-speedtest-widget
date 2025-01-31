@@ -36,6 +36,11 @@ pkg install -y jq
 
 <p>Para adicionar o widget ao seu dashboard do pfSense, execute o comando abaixo:</p>
 
+<p>Versão inicial:</p>
+<pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.old.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
+</code></pre>
+
+<p>Versão atualizada:</p>
 <pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 </code></pre>
 
