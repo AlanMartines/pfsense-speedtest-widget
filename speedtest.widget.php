@@ -127,7 +127,7 @@ events.push(function() {
         update_speedtest();
         return false;
     });
-    update_result(<?php echo htmlspecialchars(($results === null ? "null" : $results), ENT_QUOTES, 'UTF-8'); ?>);
+    update_result(<?php echo ($results === null ? "null" : $results); ?>);
 });
 </script>
 <?php } ?>
