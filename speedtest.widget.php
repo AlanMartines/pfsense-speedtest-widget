@@ -13,7 +13,7 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if(($results !== null) && (!is_object(json_decode($results)))) {
+    if(($results !== null) && (json_decode($results, true) === null)) {
         $results = null;
     }
 ?>
@@ -138,7 +138,7 @@ if ($_REQUEST['ajax']) {
                 update_speedtest();
                 return false;
             });
-            update_result(<?php echo htmlspecialchars(($results === null ? "null" : $results), ENT_QUOTES, 'UTF-8'); ?>);
+            update_result(<?php echo ($results === null ? "null" : $results); ?>);
         });
     </script>
 <?php } ?>
