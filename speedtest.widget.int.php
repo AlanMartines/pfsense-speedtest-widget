@@ -28,6 +28,28 @@ if ($_REQUEST['ajax']) {
   if (($results !== null) && (json_decode($results, true) === null)) {
     $results = null;
   }
+
+
+  $interfaces = get_interfaces_details();
+
+  echo "<table class='table'>";
+  echo "<tr><th>Interface</th><th>Status</th><th>Velocidade</th><th>IP</th></tr>";
+  
+  foreach ($interfaces as $iface_name => $iface_data) {
+      $iface_label = strtoupper($iface_name);
+      $status_icon = isset($iface_data['status']) && $iface_data['status'] === 'up' ? "✅" : "❌";
+      $speed = isset($iface_data['media']) ? $iface_data['media'] : "Desconhecido";
+      $ip_address = isset($iface_data['ipv4']['ipaddr']) ? $iface_data['ipv4']['ipaddr'] : "N/A";
+  
+      echo "<tr>";
+      echo "<td><b>{$iface_label}</b></td>";
+      echo "<td>{$status_icon}</td>";
+      echo "<td>{$speed}</td>";
+      echo "<td>{$ip_address}</td>";
+      echo "</tr>";
+  }
+  
+  echo "</table>";
 ?>
 
   <label for="interface-select"><strong>Escolha a interface:</strong></label>
