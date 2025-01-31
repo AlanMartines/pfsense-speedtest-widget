@@ -34,7 +34,7 @@ if ($_REQUEST['ajax']) {
         <td>IP <i class="fa fa-globe"></i></td>
     </tr>
     <tr>
-	<td id="speedtest-isp">N/A</td>
+				<td id="speedtest-isp">N/A</td>
         <td id="speedtest-host">N/A</td>
         <td><span id="speedtest-ip">N/A</span><span id="speedtest-geoip"></span></td>
     </tr>
@@ -48,50 +48,50 @@ if ($_REQUEST['ajax']) {
 function geoIP(results){
 		console.log('IP API');
 		$.ajax({
-			url: "https://ipwho.is/"+results.client.ip, // URL da API
-			method: "GET",
-			dataType: 'json',
-			success: function(response) {
-				// Verifica se o status é 'success'
-				if (response.success === true) {
-					// Obtém latitude e longitude
-					var latitude = response.latitude;
-					var longitude = response.longitude;
-					// Exibe o resultado na página
-					$('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
-				} else {
-					$('#speedtest-geoip').html("");
+				url: "https://ipwho.is/"+results.client.ip, // URL da API
+				method: "GET",
+				dataType: 'json',
+				success: function(response) {
+						// Verifica se o status é 'success'
+						if (response.success === true) {
+								// Obtém latitude e longitude
+								var latitude = response.latitude;
+								var longitude = response.longitude;
+								// Exibe o resultado na página
+                                $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+						} else {
+								$('#speedtest-geoip').html("");
+						}
+				},
+				error: function() {
+						// Caso ocorra um erro na requisição
+						$("#speedtest-geoip").html("");
 				}
-			},
-			error: function() {
-				// Caso ocorra um erro na requisição
-				$("#speedtest-geoip").html("");
-			}
 		});
 }
 
 function update_result(results) {
-	console.log('Speed Test');
-	if(results != null) {
-		var date = new Date(results.timestamp);
-		$("#speedtest-ts").html(date.toLocaleString());
-		$("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
-		$("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
-		$("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
-		$("#speedtest-isp").html(results.client.isp);
-		$("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
-		$("#speedtest-ip").html(results.client.ip);
-		geoIP(results);
-	} else {
-		$("#speedtest-ts").html("Speedtest failed");
-		$("#speedtest-ping").html("N/A");
-		$("#speedtest-download").html("N/A");
-		$("#speedtest-upload").html("N/A");
-		$("#speedtest-isp").html("N/A");
-		$("#speedtest-host").html("N/A");
-		$("#speedtest-ip").html("N/A");
-		$("#speedtest-geoip").html("");
-	}
+		console.log('Speed Test');
+    if(results != null) {
+        var date = new Date(results.timestamp);
+        $("#speedtest-ts").html(date);
+        $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
+        $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
+        $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
+        $("#speedtest-isp").html(results.client.isp);
+        $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+        $("#speedtest-ip").html(results.client.ip);
+				geoIP(results);
+    } else {
+        $("#speedtest-ts").html("Speedtest failed");
+        $("#speedtest-ping").html("N/A");
+        $("#speedtest-download").html("N/A");
+        $("#speedtest-upload").html("N/A");
+        $("#speedtest-isp").html("N/A");
+        $("#speedtest-host").html("N/A");
+        $("#speedtest-ip").html("N/A");
+				$("#speedtest-geoip").html("");
+    }
 }
 
 function update_speedtest() {
