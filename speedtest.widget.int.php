@@ -16,8 +16,7 @@ if ($_REQUEST['ajax']) {
   } else {
     $results = shell_exec("speedtest --secure --json");
   }
-
-  if (!empty($results) && json_decode($results, true) !== null) {
+  if (($results !== null) && (json_decode($results) !== null)) {
     $config['widgets']['speedtest_result'] = $results;
     write_config("Save speedtest results");
     echo $results;
@@ -26,18 +25,18 @@ if ($_REQUEST['ajax']) {
   }
 } else {
   $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-  if (!empty($results) && json_decode(trim($results), true) === null) {
+  if (($results !== null) && (json_decode($results, true) === null)) {
     $results = null;
   }
 ?>
 
+  <label for="interface-select"><strong>Escolha a interface:</strong></label>
   <select id="interface-select" class="form-control">
     <?php foreach ($interfaces as $iface) { ?>
       <option value="<?= htmlspecialchars($iface, ENT_QUOTES, 'UTF-8') ?>"><?= htmlspecialchars($iface, ENT_QUOTES, 'UTF-8') ?></option>
     <?php } ?>
   </select>
   <br>
-
   <table class="table">
     <tr>
       <td>
@@ -76,39 +75,36 @@ if ($_REQUEST['ajax']) {
     </tr>
   </table>
   <a id="updspeed" href="#" class="fa fa-refresh" style="display: none;"></a>
-
   <script type="text/javascript">
-    function update_speedtest() {
-      let selectedInterface = $("#interface-select").val();
-      if (!selectedInterface) {
-        alert("Por favor, selecione uma interface.");
-        return;
-      }
-
-      $('#updspeed').off("click").blur().addClass("fa-spin").click(() => false);
+    function geoIP(results) {
+      console.log('IP API');
       $.ajax({
-        type: 'POST',
-        url: "/widgets/widgets/speedtest.widget.php",
+        url: "https://ipwho.is/" + results.client.ip, // URL da API
+        method: "GET",
         dataType: 'json',
-        data: {
-          ajax: "ajax",
-          interface: selectedInterface
+        success: function(response) {
+          // Verifica se o status é 'success'
+          if (response.success === true) {
+            // Obtém latitude e longitude
+            var latitude = response.latitude;
+            var longitude = response.longitude;
+            // Exibe o resultado na página
+            $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q=' + latitude + ',' + longitude + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+          } else {
+            $('#speedtest-geoip').html("");
+          }
         },
-        success: update_result,
-        error: () => update_result(null),
-        complete: function() {
-          $('#updspeed').off("click").removeClass("fa-spin").click(() => {
-            update_speedtest();
-            return false;
-          });
+        error: function() {
+          // Caso ocorra um erro na requisição
+          $("#speedtest-geoip").html("");
         }
       });
     }
 
     function update_result(results) {
       console.log('Speed Test');
-      if (results && results.client && results.server) {
-        var date = results.timestamp ? new Date(results.timestamp).toLocaleString() : "Data indisponível";
+      if (results != null) {
+        var date = new Date(results.timestamp);
         $("#speedtest-ts").html(date);
         $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
         $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
@@ -119,39 +115,50 @@ if ($_REQUEST['ajax']) {
         geoIP(results);
       } else {
         $("#speedtest-ts").html("Speedtest failed");
-        $(".table h4, .table td").html("N/A");
+        $("#speedtest-ping").html("N/A");
+        $("#speedtest-download").html("N/A");
+        $("#speedtest-upload").html("N/A");
+        $("#speedtest-isp").html("N/A");
+        $("#speedtest-host").html("N/A");
+        $("#speedtest-ip").html("N/A");
         $("#speedtest-geoip").html("");
       }
     }
 
-    function geoIP(results) {
-      if (!results.client || !results.client.ip) return;
+    function update_speedtest() {
+      $('#updspeed').off("click").blur().addClass("fa-spin").click(function() {
+        $('#updspeed').blur();
+        return false;
+      });
       $.ajax({
-        url: "https://ipwho.is/" + results.client.ip,
-        method: "GET",
+        type: 'POST',
+        url: "/widgets/widgets/speedtest.widget.php",
         dataType: 'json',
-        success: function(response) {
-          if (response.success) {
-            $('#speedtest-geoip').html('<a href="https://www.google.com/maps?q=' + response.latitude + ',' + response.longitude + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
-          } else {
-            $('#speedtest-geoip').html("");
-          }
+        data: {
+          ajax: "ajax"
+        },
+        success: function(data) {
+          update_result(data);
         },
         error: function() {
-          $("#speedtest-geoip").html("");
+          update_result(null);
+        },
+        complete: function() {
+          $('#updspeed').off("click").removeClass("fa-spin").click(function() {
+            update_speedtest();
+            return false;
+          });
         }
       });
     }
-
-    if (typeof events !== "undefined" && events.push) {
-      events.push(function() {
-        $("#updspeed").prependTo($("#updspeed").closest(".panel").find(".widget-heading-icon")).show();
-        $('#updspeed').click(() => {
-          update_speedtest();
-          return false;
-        });
-        update_result(<?php echo htmlspecialchars(($results === null ? "null" : $results), ENT_QUOTES, 'UTF-8'); ?>);
+    events.push(function() {
+      var target = $("#updspeed").closest(".panel").find(".widget-heading-icon");
+      $("#updspeed").prependTo(target).show();
+      $('#updspeed').click(function() {
+        update_speedtest();
+        return false;
       });
-    }
+      update_result(<?php echo ($results === null ? "null" : $results); ?>);
+    });
   </script>
 <?php } ?>
