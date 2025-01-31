@@ -13,7 +13,7 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if(($results !== null) && (json_decode($results, true) === null)) {
+    if(($results !== null) && (!is_object(json_decode($results)))) {
         $results = null;
     }
 ?>
