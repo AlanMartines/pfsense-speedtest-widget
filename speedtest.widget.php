@@ -13,7 +13,7 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if(($results !== null) && (json_decode($results, true) === null)) {
+    if (($results !== null) && (json_decode($results, true) === null)) {
         $results = null;
     }
 ?>
@@ -23,7 +23,7 @@ if ($_REQUEST['ajax']) {
                 <h4>Ping <i class="fa fa-exchange"></i></h4>
             </td>
             <td>
-                <h4>Download <i class="fa fa-download"></i></i></h4>
+                <h4>Download <i class="fa fa-download"></i></h4>
             </td>
             <td>
                 <h4>Upload <i class="fa fa-upload"></i></h4>
@@ -69,7 +69,7 @@ if ($_REQUEST['ajax']) {
                         var latitude = response.latitude;
                         var longitude = response.longitude;
                         // Exibe o resultado na página
-                        $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+                        $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q=' + latitude + ',' + longitude + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
                     } else {
                         $('#speedtest-geoip').html("");
                     }
@@ -84,13 +84,17 @@ if ($_REQUEST['ajax']) {
         function update_result(results) {
             console.log('Speed Test');
             if (results != null) {
-                var date = new Date(results.timestamp);
-                $("#speedtest-ts").html(date.toLocaleString());
+                if (results.timestamp) {
+                    var date = new Date(results.timestamp);
+                    $("#speedtest-ts").html(date.toLocaleString());
+                } else {
+                    $("#speedtest-ts").html("Data indisponível");
+                }
                 $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
                 $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
                 $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
                 $("#speedtest-isp").html(results.client.isp);
-                $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+                $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q=' + results.server.lat + ',' + results.server.lon + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
                 $("#speedtest-ip").html(results.client.ip);
                 geoIP(results);
             } else {
@@ -138,7 +142,7 @@ if ($_REQUEST['ajax']) {
                 update_speedtest();
                 return false;
             });
-            update_result(<?php echo ($results === null ? "null" : $results); ?>);
+            update_result(<?php echo htmlspecialchars(($results === null ? "null" : $results), ENT_QUOTES, 'UTF-8'); ?>);
         });
     </script>
 <?php } ?>
