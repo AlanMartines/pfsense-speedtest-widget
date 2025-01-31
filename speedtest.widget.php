@@ -34,7 +34,7 @@ if ($_REQUEST['ajax']) {
         <td>IP <i class="fa fa-globe"></td>
     </tr>
     <tr>
-				<td id="speedtest-isp">N/A</td>
+		<td id="speedtest-isp">N/A</td>
         <td id="speedtest-host">N/A</td>
         <td><span id="speedtest-ip">N/A</span><span id="speedtest-geoip"></span></td>
     </tr>
@@ -81,7 +81,7 @@ function update_result(results) {
         $("#speedtest-isp").html(results.client.isp);
         $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></a>');
         $("#speedtest-ip").html(results.client.ip);
-	geoIP(results);
+		geoIP(results);
     } else {
         $("#speedtest-ts").html("Speedtest failed");
         $("#speedtest-ping").html("N/A");
@@ -90,7 +90,7 @@ function update_result(results) {
         $("#speedtest-isp").html("N/A");
         $("#speedtest-host").html("N/A");
         $("#speedtest-ip").html("N/A");
-	$("#speedtest-geoip").html("");
+		$("#speedtest-geoip").html("");
     }
 }
 
