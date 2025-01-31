@@ -4,7 +4,7 @@ require_once("guiconfig.inc");
 
 if ($_REQUEST['ajax']) {
     $results = shell_exec("speedtest --secure --json");
-    if (!empty($results) && json_decode(trim($results), true) !== null) {
+    if (($results !== null) && (json_decode($results) !== null)) {
         $config['widgets']['speedtest_result'] = $results;
         write_config("Save speedtest results");
         echo $results;
@@ -13,20 +13,32 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if (!empty($results) && json_decode(trim($results), true) === null) {
+    if(($results !== null) && (json_decode($results, true) === null)) {
         $results = null;
     }
 ?>
     <table class="table">
         <tr>
-            <td><h4>Ping <i class="fa fa-exchange"></i></h4></td>
-            <td><h4>Download <i class="fa fa-download"></i></h4></td>
-            <td><h4>Upload <i class="fa fa-upload"></i></h4></td>
+            <td>
+                <h4>Ping <i class="fa fa-exchange"></i></h4>
+            </td>
+            <td>
+                <h4>Download <i class="fa fa-download"></i></h4>
+            </td>
+            <td>
+                <h4>Upload <i class="fa fa-upload"></i></h4>
+            </td>
         </tr>
         <tr>
-            <td><h4 id="speedtest-ping">N/A</h4></td>
-            <td><h4 id="speedtest-download">N/A</h4></td>
-            <td><h4 id="speedtest-upload">N/A</h4></td>
+            <td>
+                <h4 id="speedtest-ping">N/A</h4>
+            </td>
+            <td>
+                <h4 id="speedtest-download">N/A</h4>
+            </td>
+            <td>
+                <h4 id="speedtest-upload">N/A</h4>
+            </td>
         </tr>
         <tr>
             <td>ISP <i class="fa fa-network-wired"></i></td>
@@ -43,7 +55,6 @@ if ($_REQUEST['ajax']) {
         </tr>
     </table>
     <a id="updspeed" href="#" class="fa fa-refresh" style="display: none;"></a>
-
     <script type="text/javascript">
         function geoIP(results) {
             console.log('IP API');
@@ -52,15 +63,19 @@ if ($_REQUEST['ajax']) {
                 method: "GET",
                 dataType: 'json',
                 success: function(response) {
+                    // Verifica se o status é 'success'
                     if (response.success === true) {
+                        // Obtém latitude e longitude
                         var latitude = response.latitude;
                         var longitude = response.longitude;
+                        // Exibe o resultado na página
                         $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
                     } else {
                         $('#speedtest-geoip').html("");
                     }
                 },
                 error: function() {
+                    // Caso ocorra um erro na requisição
                     $("#speedtest-geoip").html("");
                 }
             });
@@ -69,13 +84,8 @@ if ($_REQUEST['ajax']) {
         function update_result(results) {
             console.log('Speed Test');
             if (results != null) {
-                if (results.timestamp) {
-                    var date = new Date(results.timestamp);
-                    $("#speedtest-ts").html(date.toLocaleString());
-                } else {
-                    $("#speedtest-ts").html("Data indisponível");
-                }
-                
+                var date = new Date(results.timestamp);
+                $("#speedtest-ts").html(date.toLocaleString());
                 $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
                 $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
                 $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
@@ -128,7 +138,7 @@ if ($_REQUEST['ajax']) {
                 update_speedtest();
                 return false;
             });
-            update_result(<?php echo htmlspecialchars(($results === null ? "null" : $results), ENT_QUOTES, 'UTF-8'); ?>);
+            update_result(<?php echo ($results === null ? "null" : $results); ?>);
         });
     </script>
 <?php } ?>
