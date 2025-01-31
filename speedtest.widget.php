@@ -13,7 +13,7 @@ if ($_REQUEST['ajax']) {
     }
 } else {
     $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if(($results !== null) && (json_decode($results, true) === null)) {
+    if (($results !== null) && (json_decode($results, true) === null)) {
         $results = null;
     }
 ?>
@@ -69,7 +69,7 @@ if ($_REQUEST['ajax']) {
                         var latitude = response.latitude;
                         var longitude = response.longitude;
                         // Exibe o resultado na página
-                        $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q='+latitude+','+longitude+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+                        $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q=' + latitude + ',' + longitude + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
                     } else {
                         $('#speedtest-geoip').html("");
                     }
@@ -90,7 +90,7 @@ if ($_REQUEST['ajax']) {
                 $("#speedtest-download").html((results.download / 1000000).toFixed(2) + "<small> Mbps</small>");
                 $("#speedtest-upload").html((results.upload / 1000000).toFixed(2) + "<small> Mbps</small>");
                 $("#speedtest-isp").html(results.client.isp);
-                $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q='+results.server.lat+','+results.server.lon+'" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
+                $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q=' + results.server.lat + ',' + results.server.lon + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
                 $("#speedtest-ip").html(results.client.ip);
                 geoIP(results);
             } else {
