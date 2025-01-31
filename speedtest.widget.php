@@ -20,13 +20,13 @@ if ($_REQUEST['ajax']) {
     <table class="table">
         <tr>
             <td>
-                <h4>Ping <i class="fa fa-exchange"></i></h4>
+                <h4>Ping <i class="fa fa-exchange"></h4>
             </td>
             <td>
-                <h4>Download <i class="fa fa-download"></i></i></h4>
+                <h4>Download <i class="fa fa-download"></i></h4>
             </td>
             <td>
-                <h4>Upload <i class="fa fa-upload"></i></h4>
+                <h4>Upload <i class="fa fa-upload"></h4>
             </td>
         </tr>
         <tr>
@@ -41,9 +41,9 @@ if ($_REQUEST['ajax']) {
             </td>
         </tr>
         <tr>
-            <td>ISP <i class="fa fa-network-wired"></i></td>
-            <td>Host <i class="fa fa-server"></i></td>
-            <td>IP <i class="fa fa-globe"></i></td>
+            <td>ISP <i class="fa fa-network-wired"></td>
+            <td>Host <i class="fa fa-server"></td>
+            <td>IP <i class="fa fa-globe"></td>
         </tr>
         <tr>
             <td id="speedtest-isp">N/A</td>
