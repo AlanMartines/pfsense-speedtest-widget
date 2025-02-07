@@ -61,8 +61,8 @@ if ($_REQUEST['ajax']) {
         $results = null;
     }
 ?>
-    <label for="interface-select"><strong>Escolha a interface:</strong></label>
     <select id="interface-select" class="form-control">
+        <option value="">Escolha a interface</option>
         <?php foreach ($interfaces as $iface_name => $iface_data) {
             if ($iface_data['status'] === "UP") {  // Exibir apenas interfaces ativas
                 echo "<option value=\"" . htmlspecialchars($iface_name, ENT_QUOTES, 'UTF-8') . "\">";
