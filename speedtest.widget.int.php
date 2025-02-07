@@ -51,7 +51,7 @@ if ($_REQUEST['ajax']) {
         <?php foreach ($interfaces as $iface_name => $iface_data) {
             if ($iface_data['status'] === "UP") {  // Exibir apenas interfaces ativas
                 echo "<option value=\"{$iface_data['ip']}\">";
-                echo "{$iface_data['status']} - {$iface_data['name']} ({$iface_data['ip']})";
+                echo "{$iface_data['name']} ({$iface_data['ip']})";
                 echo "</option>";
             }
         } ?>
