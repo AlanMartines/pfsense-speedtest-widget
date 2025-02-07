@@ -61,7 +61,7 @@ if ($_REQUEST['ajax']) {
         $results = null;
     }
 ?>
-    <select id="interface-select" class="form-control">
+    <select id="interface-select" name="interface-select"class="form-control">
         <option value="">Escolha a interface</option>
         <?php foreach ($interfaces as $iface_name => $iface_data) {
             if ($iface_data['status'] === "UP") {  // Exibir apenas interfaces ativas
@@ -71,8 +71,8 @@ if ($_REQUEST['ajax']) {
             }
         } ?>
     </select>
-    <br>
-    <?php print "Int: ".$_POST['interface-select'] ?? "Vazio"; ?> 
+    <br> 
+    <span id="interface-get">Int: </span>
     <br>
     <table class="table">
         <tr>
@@ -141,6 +141,10 @@ if ($_REQUEST['ajax']) {
         function update_result(results) {
             console.log('Speed Test');
             if (results != null) {
+                //
+                let int_select = $('#interface-select').blur();
+                $("#interface-get").html("Int: "+int_select);
+                //
                 var date = new Date(results.timestamp);
                 $("#speedtest-ts").html(date);
                 $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
