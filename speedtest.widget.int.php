@@ -125,6 +125,7 @@ if ($_REQUEST['ajax']) {
                 return false;
             });
             let int_select = $('#interface-select').val();
+            console.log('Interface: ' + int_select);
             $.ajax({
                 type: 'POST',
                 url: "/widgets/widgets/speedtest.widget.php",
