@@ -19,7 +19,7 @@ foreach ($ifdescrs as $ifdescr => $ifname) {
         'name' => $ifname,
         'status' => $status,
         'speed' => $speed,
-        'ip' => $ip_address
+        'ip' => trim($ip_address)
     ];
 }
 
