@@ -16,9 +16,9 @@ foreach ($ifdescrs as $ifdescr => $ifname) {
     $ip_address = isset($ifinfo['ipaddr']) ? $ifinfo['ipaddr'] : "N/A";
 
     $interfaces[$ifdescr] = [
-        'name' => $ifname,
-        'status' => $status,
-        'speed' => $speed,
+        'name' => trim($ifname),
+        'status' => trim($status),
+        'speed' => trim($speed),
         'ip' => trim($ip_address)
     ];
 }
