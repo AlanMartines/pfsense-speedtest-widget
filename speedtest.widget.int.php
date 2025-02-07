@@ -47,7 +47,7 @@ if ($_REQUEST['ajax']) {
     }
 ?>
     <select id="interface-select" name="interface-select" class="form-control">
-        <option value="">Escolha a interface</option>
+        <option value="">Default</option>
         <?php foreach ($interfaces as $iface_name => $iface_data) {
             if ($iface_data['status'] === "UP") {  // Exibir apenas interfaces ativas
                 echo "<option value=\"{$iface_data['ip']}\">";
