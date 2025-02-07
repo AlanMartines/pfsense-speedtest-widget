@@ -36,21 +36,24 @@ pkg install -y jq
 
 <p>Para adicionar o widget ao seu dashboard do pfSense, execute o comando abaixo:</p>
 
-<p>Versão inicial:</p>
+<p><strong>Versão inicial:</strong></p>
+<p align="left"><img src="https://github.com/user-attachments/assets/c0c452e2-fbf7-4676-80ea-e5055197f0c7" alt="Speedtest Widget Screenshot"></p>
+
 <pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.old.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 </code></pre>
 
-<p>Versão atualizada:</p>
+<p><strong>Versão atualizada:</strong></p>
+<p align="left"><img src="https://github.com/user-attachments/assets/667cf652-c9f9-463e-a315-53c28ff9e451" alt="Speedtest Widget Screenshot"></p>
+
 <pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 </code></pre>
 
-<p>Versão atualizada com opção de interfaces:</p>
+<p><strong>Versão atualizada com opção de interfaces:</strong></p>
+<p align="left"><img src="https://github.com/user-attachments/assets/e70f288d-477b-4757-a7b2-9d4cc40beea3" alt="Speedtest Widget Screenshot"></p>
+<p align="left"><img src="https://github.com/user-attachments/assets/44732861-f17a-4cdf-8450-6b0a08903ba3" alt="Speedtest Widget Screenshot"></p>
+
 <pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.int.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 </code></pre>
-
-<h3>Exemplo de Tela do Widget</h3>
-
-<p align="center"><img src="https://github.com/user-attachments/assets/2f0fc901-9b6a-4b84-ba1f-408309c385c8" alt="Speedtest Widget Screenshot"></p>
 
 <h2>Créditos</h2>
 
