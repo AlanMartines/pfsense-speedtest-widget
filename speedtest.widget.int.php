@@ -72,7 +72,7 @@ if ($_REQUEST['ajax']) {
         } ?>
     </select>
     <br>
-    <?php print "teste int: ".$_POST['interface-select'] ?? "Vazio"; ?> 
+    <?php print "Int: ".$_POST['interface-select'] ?? "Vazio"; ?> 
     <br>
     <table class="table">
         <tr>
