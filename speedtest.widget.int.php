@@ -23,31 +23,16 @@ foreach ($ifdescrs as $ifdescr => $ifname) {
     ];
 }
 
-/*
+// Modificação para considerar a interface selecionada
 if ($_REQUEST['ajax']) {
-    $interface = escapeshellarg($_REQUEST['interface'] ?? '');
-    if (!empty($interface)) {
-        $results = shell_exec("speedtest --secure --interface={$interface} --json");
+    $selected_interface = isset($_REQUEST['interface']) ? escapeshellarg($_REQUEST['interface']) : '';
+
+    if (!empty($selected_interface)) {
+        $results = shell_exec("speedtest --secure --json --source {$selected_interface}");
     } else {
         $results = shell_exec("speedtest --secure --json");
     }
 
-    if (!empty($results) && json_decode($results, true) !== null) {
-        $config['widgets']['speedtest_result'] = $results;
-        write_config("Save speedtest results");
-        echo $results;
-    } else {
-        echo json_encode(null);
-    }
-} else {
-    $results = isset($config['widgets']['speedtest_result']) ? $config['widgets']['speedtest_result'] : null;
-    if (!empty($results) && json_decode(trim($results), true) === null) {
-        $results = null;
-}
-*/
-
-if ($_REQUEST['ajax']) {
-    $results = shell_exec("speedtest --secure --json");
     if (($results !== null) && (json_decode($results) !== null)) {
         $config['widgets']['speedtest_result'] = $results;
         write_config("Save speedtest results");
@@ -61,7 +46,7 @@ if ($_REQUEST['ajax']) {
         $results = null;
     }
 ?>
-    <select id="interface-select" name="interface-select"class="form-control">
+    <select id="interface-select" name="interface-select" class="form-control">
         <option value="">Escolha a interface</option>
         <?php foreach ($interfaces as $iface_name => $iface_data) {
             if ($iface_data['status'] === "UP") {  // Exibir apenas interfaces ativas
@@ -71,7 +56,7 @@ if ($_REQUEST['ajax']) {
             }
         } ?>
     </select>
-    <br>
+    <br> 
     <table class="table">
         <tr>
             <td>
@@ -111,35 +96,9 @@ if ($_REQUEST['ajax']) {
     </table>
     <a id="updspeed" href="#" class="fa fa-refresh" style="display: none;"></a>
     <script type="text/javascript">
-        function geoIP(results) {
-            console.log('IP API');
-            $.ajax({
-                url: "https://ipwho.is/" + results.client.ip, // URL da API
-                method: "GET",
-                dataType: 'json',
-                success: function(response) {
-                    // Verifica se o status é 'success'
-                    if (response.success === true) {
-                        // Obtém latitude e longitude
-                        var latitude = response.latitude;
-                        var longitude = response.longitude;
-                        // Exibe o resultado na página
-                        $('#speedtest-geoip').html(' <a href="https://www.google.com/maps?q=' + latitude + ',' + longitude + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
-                    } else {
-                        $('#speedtest-geoip').html("");
-                    }
-                },
-                error: function() {
-                    // Caso ocorra um erro na requisição
-                    $("#speedtest-geoip").html("");
-                }
-            });
-        }
-
         function update_result(results) {
             console.log('Speed Test');
             if (results != null) {
-                //
                 var date = new Date(results.timestamp);
                 $("#speedtest-ts").html(date);
                 $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
@@ -148,7 +107,6 @@ if ($_REQUEST['ajax']) {
                 $("#speedtest-isp").html(results.client.isp);
                 $("#speedtest-host").html(results.server.name + ", " + results.server.country + ' <a href="https://www.google.com/maps?q=' + results.server.lat + ',' + results.server.lon + '" target="_blank"><i class="fa fa-map-marker-alt"></i></a>');
                 $("#speedtest-ip").html(results.client.ip);
-                geoIP(results);
             } else {
                 $("#speedtest-ts").html("Speedtest failed");
                 $("#speedtest-ping").html("N/A");
@@ -167,13 +125,13 @@ if ($_REQUEST['ajax']) {
                 return false;
             });
             let int_select = $('#interface-select').val();
-            $("#interface-get").html("Int: "+int_select);
             $.ajax({
                 type: 'POST',
                 url: "/widgets/widgets/speedtest.widget.php",
                 dataType: 'json',
                 data: {
-                    ajax: "ajax"
+                    ajax: "ajax",
+                    interface: int_select
                 },
                 success: function(data) {
                     update_result(data);
@@ -189,6 +147,7 @@ if ($_REQUEST['ajax']) {
                 }
             });
         }
+
         events.push(function() {
             var target = $("#updspeed").closest(".panel").find(".widget-heading-icon");
             $("#updspeed").prependTo(target).show();
