@@ -44,7 +44,7 @@ pkg install -y jq
 <pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 </code></pre>
 
-<p>Versão atualizada com opção de interfaces (Em teste):</p>
+<p>Versão atualizada com opção de interfaces:</p>
 <pre><code>curl -LJ https://github.com/AlanMartines/pfsense-speedtest-widget/raw/refs/heads/master/speedtest.widget.int.php -o /usr/local/www/widgets/widgets/speedtest.widget.php
 </code></pre>
 
