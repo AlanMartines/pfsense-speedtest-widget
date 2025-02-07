@@ -125,6 +125,7 @@ if ($_REQUEST['ajax']) {
                 return false;
             });
             let int_select = $('#interface-select').val();
+            console.log('Interface speedtest: ', int_select);
             $.ajax({
                 type: 'POST',
                 url: "/widgets/widgets/speedtest.widget.php",
@@ -159,7 +160,7 @@ if ($_REQUEST['ajax']) {
         });
 
         document.getElementById('interface-select').addEventListener('change', function() {
-            console.log('Interface: ', this.value);
+            console.log('Interface change: ', this.value);
         });
     </script>
 <?php } ?>
