@@ -71,8 +71,6 @@ if ($_REQUEST['ajax']) {
             }
         } ?>
     </select>
-    <br> 
-    <span id="interface-get">Int: </span>
     <br>
     <table class="table">
         <tr>
@@ -175,8 +173,7 @@ if ($_REQUEST['ajax']) {
                 url: "/widgets/widgets/speedtest.widget.php",
                 dataType: 'json',
                 data: {
-                    ajax: "ajax",
-                    interface: int_select
+                    ajax: "ajax"
                 },
                 success: function(data) {
                     update_result(data);
