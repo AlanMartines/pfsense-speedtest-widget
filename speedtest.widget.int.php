@@ -69,7 +69,6 @@ if ($_REQUEST['ajax']) {
                 echo "{$iface_data['name']} ({$iface_data['ip']})";
                 echo "</option>";
             }
-            print $interfaces ?? "Teste";
         } ?>
     </select>
     <br>
