@@ -124,7 +124,6 @@ if ($_REQUEST['ajax']) {
                 $('#updspeed').blur();
                 return false;
             });
-
             let int_select = $('#interface-select').val();
             $.ajax({
                 type: 'POST',
