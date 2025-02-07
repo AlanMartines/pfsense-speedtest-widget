@@ -142,9 +142,6 @@ if ($_REQUEST['ajax']) {
             console.log('Speed Test');
             if (results != null) {
                 //
-                let int_select = $('#interface-select').blur();
-                $("#interface-get").html("Int: "+int_select);
-                //
                 var date = new Date(results.timestamp);
                 $("#speedtest-ts").html(date);
                 $("#speedtest-ping").html(results.ping.toFixed(2) + "<small> ms</small>");
@@ -171,12 +168,15 @@ if ($_REQUEST['ajax']) {
                 $('#updspeed').blur();
                 return false;
             });
+            let int_select = $('#interface-select').val();
+            $("#interface-get").html("Int: "+int_select);
             $.ajax({
                 type: 'POST',
                 url: "/widgets/widgets/speedtest.widget.php",
                 dataType: 'json',
                 data: {
-                    ajax: "ajax"
+                    ajax: "ajax",
+                    interface: int_select
                 },
                 success: function(data) {
                     update_result(data);
