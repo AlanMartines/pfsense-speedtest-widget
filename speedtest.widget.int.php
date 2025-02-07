@@ -11,7 +11,7 @@ $interfaces = [];
 
 foreach ($ifdescrs as $ifdescr => $ifname) {
     $ifinfo = get_interface_info($ifdescr);
-    $status = ($ifinfo['status'] == "up") ? "UP" : "DOWN";
+    $status = $ifinfo['status'] == "up";
     $speed = isset($ifinfo['media']) ? $ifinfo['media'] : "Desconhecido";
     $ip_address = isset($ifinfo['ipaddr']) ? $ifinfo['ipaddr'] : "N/A";
 
@@ -47,11 +47,11 @@ if ($_REQUEST['ajax']) {
     }
 ?>
     <select id="interface-select" name="interface-select" class="form-control">
-        <option value="">Default</option>
+        <option value="">Default Gateway</option>
         <?php foreach ($interfaces as $iface_name => $iface_data) {
-            if ($iface_data['status'] === "UP") {  // Exibir apenas interfaces ativas
+            if ($iface_data['status'] === "UP") {
                 echo "<option value=\"{$iface_data['ip']}\">";
-                echo "{$iface_data['name']} ({$iface_data['ip']})";
+                echo "{$iface_data['status']} - {$iface_data['name']} ({$iface_data['ip']})";
                 echo "</option>";
             }
         } ?>
