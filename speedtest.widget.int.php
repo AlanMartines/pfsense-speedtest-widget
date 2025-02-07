@@ -126,6 +126,8 @@ if ($_REQUEST['ajax']) {
             });
             $('#interface-select').on('change', function() {
                 console.log('Interface: ' + this.value);
+                let int_select = $('#interface-select').val();
+                console.log('Interface: ' + int_select);
             });
             let int_select = $('#interface-select').val();
             $.ajax({
