@@ -158,10 +158,8 @@ if ($_REQUEST['ajax']) {
             update_result(<?php echo ($results === null ? "null" : $results); ?>);
         });
 
-        $('#interface-select').on('change', function() {
-                console.log('Interface: ' + this.value);
-                let int_select = $('#interface-select').val();
-                console.log('Interface: ' + int_select);
+        document.getElementById('interface-select').addEventListener('change', function() {
+            console.log('Interface: ', this.value);
         });
     </script>
 <?php } ?>
