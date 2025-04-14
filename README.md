@@ -14,7 +14,8 @@
 
 <p>Execute os seguintes comandos no terminal do seu pfSense para instalar o <code>speedtest-cli</code> e suas dependências:</p>
 
-<pre><code>pkg update
+<pre><code>pkg bootstrap -f
+pkg update
 set package_name=`pkg search speedtest-cli | awk '{ print $1 }'`
 pkg install -y $package_name
 pkg install -y jq
