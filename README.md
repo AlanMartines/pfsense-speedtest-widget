@@ -1,6 +1,6 @@
 <h1>Speedtest Dashboard Widget para pfSense</h1>
 
-<p>Este widget foi desenvolvido para adicionar a funcionalidade de <em>speedtest</em> ao pfSense, permitindo a listagem e conexão automática com servidores geograficamente próximos, o que proporciona maior precisão nos resultados dos testes de velocidade de internet.</p>
+<p>Este widget foi desenvolvido para adicionar a funcionalidade de <em>speedtest</em> ao pfSense, permitindo a listagem e conexão automática com servidores geograficamente próximos, o que proporciona maior precisão nos resultados dos testes de velocidade de internet. Validado na versão do <a href="https://www.pfsense.org/download/">pfsense 2.7.2</a>.</p>
 
 <h2>Requisitos</h2>
 
